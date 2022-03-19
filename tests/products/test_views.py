@@ -20,7 +20,7 @@ class APITestCaseAdmin(APITestCase):
         self.client = APIClient()
         self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
 
-class TestProductList(APITestCase):
+class TestProductListNonAdmin(APITestCase):
     @pytest.mark.django_db
     def test_get_product_list(self):
         url = reverse('product-list')
@@ -59,3 +59,11 @@ class TestProductListAdmin(APITestCaseAdmin):
 
         self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
         self.assertEqual(Product.objects.count(), NUMBER_OF_PRODUCTS_IN_INITIAL_MIGRATION)
+
+class TestProductDetailNonAdmin(APITestCase):
+    @pytest.mark.django_db
+    def test_can_get_product_detail(self):
+        url = reverse('product-detail', kwargs={'product_id': 1})
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
