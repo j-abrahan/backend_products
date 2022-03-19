@@ -7,7 +7,7 @@ services:
             - "POSTGRES_HOST_AUTH_METHOD=trust"
         volumes:
             - postgres_data:/var/lib/postgresql/data/
-    users:
+    products:
         build: .
         command: bash -c "./manage.py runserver 0.0.0.0:8000"
         volumes:
