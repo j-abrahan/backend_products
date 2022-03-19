@@ -1,0 +1,21 @@
+version: '3.7'
+
+services:
+    database:
+        image: "postgres:11"
+        environment:
+            - "POSTGRES_HOST_AUTH_METHOD=trust"
+        volumes:
+            - postgres_data:/var/lib/postgresql/data/
+    users:
+        build: .
+        command: bash -c "./manage.py runserver 0.0.0.0:8000"
+        volumes:
+            - .:/code
+        ports:
+            - 8000:8000
+        depends_on:
+            - database
+
+volumes:
+    postgres_data:
