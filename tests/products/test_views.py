@@ -67,3 +67,26 @@ class TestProductDetailNonAdmin(APITestCase):
         response = self.client.get(url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
+
+class TestProductDetailAdmin(APITestCaseAdmin):
+    @pytest.mark.django_db
+    def test_admin_can_delete_a_product(self):
+        url = reverse('product-detail', kwargs={'product_id': 1})
+
+        response = self.client.delete(url)
+
+        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
+        self.assertEqual(Product.objects.count(), NUMBER_OF_PRODUCTS_IN_INITIAL_MIGRATION - 1)
+
+    @pytest.mark.django_db
+    def test_non_admin_cannot_delete_a_product(self):
+        url = reverse('product-detail', kwargs={'product_id': 1})
+
+        # Logout so the user is non admin
+        self.client.logout()
+
+        response = self.client.delete(url)
+
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
+        self.assertEqual(Product.objects.count(), NUMBER_OF_PRODUCTS_IN_INITIAL_MIGRATION)
+
