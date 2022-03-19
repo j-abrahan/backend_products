@@ -32,3 +32,34 @@ IMPORTANT NOTE: The tests rely on the initially provided migration data products
 ``` bash
 docker-compose exec products pytest -v
 ```
+
+### Stopping the app
+
+``` bash
+$ docker-compose down
+```
+
+# Restart the app (Migrations will be run again)
+
+```
+$ docker-compose up -d --build
+```
+
+### BASIC DEBUGGING
+
+- See running containers created by docker-compose
+``` bash
+$ docker ps
+```
+
+- See container logs
+
+``` bash
+$ docker-compose logs -f
+```
+
+- Open a shell to the running container
+
+``` bash
+$ docker-compose exec products bash
+```

@@ -9,7 +9,7 @@ services:
             - postgres_data:/var/lib/postgresql/data/
     products:
         build: .
-        command: bash -c "./manage.py runserver 0.0.0.0:8000"
+        command: bash -c "./manage.py makemigrations && ./manage.py migrate && ./manage.py runserver 0.0.0.0:8000"
         volumes:
             - .:/code
         ports:
