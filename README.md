@@ -27,6 +27,7 @@ The tests are implemented using pytest and pytest-django. See requirements.txt
 
 The Django tests create their own throaway DB, therefore they can be run at the same time that the application is running without
 affecting the application DB.
+
 IMPORTANT NOTE: The tests rely on the initially provided migration data products/migrations/
 
 ``` bash
@@ -39,7 +40,7 @@ docker-compose exec products pytest -v
 $ docker-compose down
 ```
 
-# Restart the app (Migrations will be run again)
+### Restart the app (Migrations will be run again)
 
 ```
 $ docker-compose up -d --build
