@@ -9,3 +9,4 @@ class TestProductList(APITestCase):
         url = reverse('product-list')
         response = self.client.get(url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(len(response.json()), 6)
