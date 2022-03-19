@@ -90,3 +90,33 @@ class TestProductDetailAdmin(APITestCaseAdmin):
         self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
         self.assertEqual(Product.objects.count(), NUMBER_OF_PRODUCTS_IN_INITIAL_MIGRATION)
 
+    @pytest.mark.django_db
+    def test_admin_can_update_a_product(self):
+        url = reverse('product-detail', kwargs={'product_id': 1})
+
+        new_product = {
+                "name": "Coca-cola",
+                "price": "2.00",
+                "quantity": 8
+        }
+
+        response = self.client.put(url, new_product, format='json')
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(Product.objects.count(), NUMBER_OF_PRODUCTS_IN_INITIAL_MIGRATION)
+        self.assertEqual(response.json()['price'], '2.00')
+        self.assertEqual(response.json()['quantity'], 8)
+
+    @pytest.mark.django_db
+    def test_admin_can_patch_a_product(self):
+        url = reverse('product-detail', kwargs={'product_id': 1})
+
+        new_product = {
+                "price": "2.00",
+        }
+
+        response = self.client.patch(url, new_product, format='json')
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(Product.objects.count(), NUMBER_OF_PRODUCTS_IN_INITIAL_MIGRATION)
+        self.assertEqual(response.json()['price'], '2.00')
