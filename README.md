@@ -20,7 +20,7 @@ $ docker-compose up -d --build
 ```
 
 - Database migrations are run before starting the Django server
-- The application will run by default on localhost IP 0.0.0.0:8000, therefore point navigator to address http://0.0.0.0:8000/products
+- The application will run by default on localhost IP 0.0.0.0:8000, therefore point navigator to address http://0.0.0.0:8000 or http://0.0.0.0:8000/products
 
 ### Running the tests
 The tests are implemented using pytest and pytest-django. See requirements.txt
