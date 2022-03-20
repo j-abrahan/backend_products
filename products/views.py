@@ -1,22 +1,16 @@
 from django.contrib.auth.models import User
 from rest_framework import generics
 from .models import Product, Order
-from .serializers import ProductSerializer, OrderSerializer, UserSerializer
+from .serializers import ProductSerializer, OrderSerializer, RegisterSerializer
 from .permissions import IsAdminOrReadOnly
-from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly
+from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly, AllowAny
 from rest_framework.response import Response
 from django.http import Http404
-from rest_framework import viewsets
-from rest_framework.views import APIView
-from rest_framework import status
 
-class UserViewSet(viewsets.ModelViewSet):
-    """
-    API endpoint that allows users to be viewed or edited.
-    """
-    queryset = User.objects.all().order_by('-date_joined')
-    serializer_class = UserSerializer
-    permission_classes = [IsAuthenticated]
+class RegisterView(generics.CreateAPIView):
+    queryset = User.objects.all()
+    permission_classes = (AllowAny,)
+    serializer_class = RegisterSerializer
 
 class ProductList(generics.ListCreateAPIView):
     queryset = Product.objects.all()
@@ -60,21 +54,3 @@ class OrderList(generics.ListCreateAPIView):
             name=name,
             quantity=quantity,
             created_by=created_by)
-            #product_id=self.kwargs['product_id'])
-
-#class OrderList(APIView):
-#
-#    def get(self, request, format=None):
-#        orders = Order.objects.all()
-#        serializer = OrderSerializer(orders, many=True)
-#        return Response(serializer.data)
-#
-#    def post(self, request, format=None):
-#        serializer = OrderSerializer(name=self.request.data["name"],
-#                                     quantity=self.request.data["quantity"],
-#                                     created_by=self.request.user)
-#        if serializer.is_valid():
-#            serializer.save()
-#            return Response(serializer.data, status=status.HTTP_201_CREATED)
-#        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-

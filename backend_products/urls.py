@@ -16,10 +16,12 @@ Including another URLconf
 from django.urls import path, re_path, include
 from django.contrib import admin
 from rest_framework.authtoken.views import obtain_auth_token
+from products.views import RegisterView
 
 urlpatterns = [
     re_path(r'admin/', admin.site.urls),
     re_path(r'^', include('products.urls')),
     re_path(r'^api-token-auth/', obtain_auth_token),
-    path('api-auth/', include('rest_framework.urls', namespace='rest_framework'))
+    path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
+    path('register/', RegisterView.as_view(), name='auth_register'),
 ]
