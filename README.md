@@ -64,3 +64,22 @@ $ docker-compose logs -f
 ``` bash
 $ docker-compose exec products bash
 ```
+
+### Bonus points
+
+### Deployment instructions for Heroku
+
+1. Install a production server to be used instead of the default Django server. For example, Gunicorn.
+2. Update requirements.txt file with Gunicorn related dependencies.
+3. Create a runtime.txt file next to requirements.txt to specify the Python version to run on Heroku
+4. Update the ALLOWED_HOSTS configuration adding ".herokuapp.com"
+5. Create a Procfile for Heroku at the same level as manage.py that tells Heroku that Gunicorn is used as webserver
+
+### Future work
+
+- Extend unit tests.
+- Add code coverage reports based on unit tests.
+- Implement handling ordering multiple products in the same request.
+- Implement product based statistics, for instance, most ordered product, total price paid per product. Both for different
+time periods, all time, year to day, last month, last week.
+- Add advanced debugging information, how to run a debugger with the Docker running app
