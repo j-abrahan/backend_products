@@ -10,4 +10,8 @@ urlpatterns = [
             views.ProductDetail.as_view(),
             name='product-detail'
     ),
+    re_path(r'^products/orders/$',
+            views.OrderList.as_view(),
+            name='order-list'
+    ),
 ]
