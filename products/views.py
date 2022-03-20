@@ -6,6 +6,7 @@ from .permissions import IsAdminOrReadOnly
 from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly, AllowAny
 from rest_framework.response import Response
 from django.http import Http404
+from rest_framework import serializers
 
 class RegisterView(generics.CreateAPIView):
     queryset = User.objects.all()
@@ -45,7 +46,7 @@ class OrderList(generics.ListCreateAPIView):
         if product.quantity - int(quantity) < 0:
             raise serializers.ValidationError(
                     'We do not have enough inventory of ' + name  + \
-                    'to complete your purchase. Sorry, we will restock soon')
+                    ' to complete your purchase. The product will be in stock soon' )
         else:
             product.quantity -= int(quantity)
             product.save()
